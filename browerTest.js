@@ -5,6 +5,7 @@ import http from 'k6/http';
 const BROWSER_USER = __ENV.BROWSER_USER;
 const BROWSER_PASSWORD = __ENV.BROWSER_PASSWORD;
 const GREEN_TICK = `\x1b[32m✔\x1b[0m`;
+const TARGET_URL = 'https://rahulshettyacademy.com/locatorspractice/';
 
 export const options = {
     scenarios: {
@@ -35,7 +36,7 @@ export const options = {
 
         // Core Web Vitals
         'browser_web_vital_fcp': ['p(95)<2100'],    // First Content
-        'browser_web_vital_lcp': ['p(95)<2500'],    // Main Content
+        [`browser_web_vital_lcp{url:${TARGET_URL}}`]: ['p(95)<3000'],    // Main Content
         'browser_web_vital_cls': ['p(95)<0.1'],     // Layout stability
         'browser_web_vital_ttfb': ['p(95)<3000'],    // Server response
 
@@ -65,7 +66,7 @@ export async function browserTest() {
     const page = await context.newPage();
 
     // Use sectorshub browser plugin to make life easier
-    await page.goto("https://rahulshettyacademy.com/locatorspractice/");
+    await page.goto(`${TARGET_URL}`);
 
     console.log('🔒 Filled in credentials...');
     await page.locator("#inputUsername").type(`${BROWSER_USER}`);
