@@ -1,0 +1,21 @@
+{
+  "name": "k6load",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "e2e": "dotenv -e .env -- k6 run e2e.js",
+    "e2e_1": "dotenv -e .env -- k6 run e2e_1.js",
+    "e2e_1ts": "dotenv -e .env -- k6 run e2e_1.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/k6": "^2.0.0",
+    "dotenv-cli": "^11.0.0",
+    "esbuild": "^0.28.1",
+    "typescript": "^6.0.3"
+  }
+}

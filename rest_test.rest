@@ -1,0 +1,58 @@
+@csrf_token = {{$dotenv MY_CSRF_TOKEN}}
+@user_name = {{$dotenv REST_USER_NAME}}
+@pass_word = {{$dotenv REST_PASS_WORD}}
+
+POST https://quickpizza.grafana.com/api/users
+Cookie: csrf_token={{csrf_token}};
+Content-Type: application/json
+
+{
+    "username": "{{user_name}}",
+    "password": "{{pass_word}}"
+}
+
+###
+
+### Login with new user
+# @name loginResponse
+POST https://quickpizza.grafana.com/api/users/token/login?set_cookie=true
+Content-Type: application/json
+Cookie: csrf_token={{csrf_token}};
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36
+
+{
+  "username": "{{user_name}}",
+  "password": "{{pass_word}}",
+  "csrf": "{{csrf_token}}"
+}
+
+
+###Create a pizza
+
+# @name orderResponse
+@authToken = {{loginResponse.response.body.token}}
+
+POST https://quickpizza.grafana.com/api/pizza
+Content-Type: application/json
+Cookie: csrf_token={{csrf_token}};
+Authorization: Bearer {{authToken}}
+
+{
+  "maxCaloriesPerSlice": 1000,
+  "mustBeVegetarian": true,
+  "excludedIngredients": [],
+  "excludedTools": [],
+  "maxNumberOfToppings": 5,
+  "minNumberOfToppings": 2,
+  "customName": "ssdfsdfsd"
+}
+
+
+###
+
+@orderId = {{orderResponse.response.body.pizza.id}}
+GET https://quickpizza.grafana.com/api/pizza/{{orderId}}
+Content-Type: application/json
+Cookie: csrf_token={{csrf_token}};
+Authorization: Bearer {{authToken}}
+
