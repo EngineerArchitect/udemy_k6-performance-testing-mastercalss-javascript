@@ -32,6 +32,16 @@ export const options = {
 
     thresholds: {
         checks: ['rate == 1.0'],
+
+        // Core Web Vitals
+        'browser_web_vital_fcp': ['p(95)<2100'],    // First Content
+        'browser_web_vital_lcp': ['p(95)<2500'],    // Main Content
+        'browser_web_vital_cls': ['p(95)<0.1'],     // Layout stability
+        'browser_web_vital_ttfb': ['p(95)<3000'],    // Server response
+
+        // Additional metrics
+        'browser_web_vital_inp': ['p(95)<200'],     // Input responsiveness
+        'browser_http_req_duration' : ['p(95)<3000'],   // Overall Page load
     }
 };
 
