@@ -6,7 +6,8 @@
   "scripts": {
     "e2e": "dotenv -e .env -- k6 run e2e.js",
     "e2e_1": "dotenv -e .env -- k6 run e2e_1.js",
-    "e2e_1ts": "dotenv -e .env -- k6 run e2e_1.ts"
+    "e2e_1ts": "dotenv -e .env -- k6 run e2e_1.ts",
+    "browser-test": "dotenv -e .env -- k6 run browerTest.js"
   },
   "keywords": [],
   "author": "",
