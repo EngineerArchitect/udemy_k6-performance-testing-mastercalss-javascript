@@ -8,6 +8,7 @@ const BASE_URL = 'https://quickpizza.grafana.com';
 const USERNAME_PREFIX = __ENV.TEST_USER_PREFIX;
 const PASSWORD = __ENV.MY_PIZZA_PASSWORD;
 const CSRF_TOKEN = `${randomString(20)}`;
+const CLOUD_PROJECT_ID = parseInt(__ENV.CLOUD_PROJECT_ID);
 
 const authenticationRate = new Rate('authentication_rate'); // caclulates a check rate based on 0's and 1's added to it
 const successfulOrders = new Counter('successful_orders');
@@ -35,6 +36,9 @@ function authParams(authToken, tags = {}) {
  * @returns JavaScript Object Literal with checkstatus
  */
 export function setup() {
+  if (!CLOUD_PROJECT_ID) {
+    exec.test.abort('Startup check failed: CLOUD_PROJECT_ID environment variable is not set.');
+  }
 
   if (!PASSWORD) {
     exec.test.abort('Startup check failed: PASSWORD environment variable is not set.');
@@ -49,6 +53,12 @@ export function setup() {
 }
 
 export const options = {
+  cloud: {
+    // Project: Default project
+    projectID: CLOUD_PROJECT_ID,
+    // Test runs with the same name groups test runs together.
+    name: 'Test e2e'
+  },
 
   stages: [
     { duration: '5s', target: 2 },
