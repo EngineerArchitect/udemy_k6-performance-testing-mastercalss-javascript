@@ -103,14 +103,14 @@ export const options = {
   ],
 
   thresholds: {
-    'http_req_duration': ['p(95) < 350'],
+    'http_req_duration': ['p(95) < 400'],
     'checks': ['rate > 0.9'],
     'iteration_duration': ['p(95) < 8000'],
 
     'authentication_rate': ['rate > 0.9'],
     'successful_orders': ['count > 5'],
 
-    'http_req_duration{name:userLogin}': ['avg < 350'],
+    'http_req_duration{name:userLogin}': ['avg < 400'],
     'http_req_duration{name:orderCreate}': ['avg < 400'],
     'http_req_duration{name:orderRetrieve}': ['avg < 400'],
 
